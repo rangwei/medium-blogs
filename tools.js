@@ -8,22 +8,26 @@ async function download() {
     for (const item of data.items) {
         downloadBlogs(item);
     }
-    
+
 }
 
-const generateIndex = async() => {
+const generateIndex = async () => {
 
-    const index = await fs.readFile('./Templates/index_template.html');
-    let indexString = index.toString();
+    try {
+        const index = await fs.readFile('./Templates/index_template.html');
+        let indexString = index.toString();
 
-    const contenct = getIndexContent();
-    indexString = indexString.replace('index-place', contenct);
+        const contenct = getIndexContent();
+        indexString = indexString.replace('index-place', contenct);
 
-    await fs.writeFile('./public/index.html', indexString);
-    console.log('index.html completed.');
+        await fs.writeFile('./public/index.html', indexString);
+        console.log('index.html completed.');
+    } catch (e) {
+        console.log(e);
+    }
 }
 
-const  downloadBlogs = async (item) => {
+const downloadBlogs = async (item) => {
 
     const guid = item.guid.split('/').pop();
     const title = item.title;
@@ -53,10 +57,10 @@ const getIndexContent = () => {
     return content;
 }
 
-const getHeader =  (item) => {
+const getHeader = (item) => {
 
     const guid = item.guid.split('/').pop();
-    
+
     const header = `<div class=\"mui--text-headline\">${item.title}</div>\n`;
 
     const author = `<div class=\"mui--text-black-54\">By ${item.author}, ${item.pubDate}</div>\n`;
@@ -64,13 +68,13 @@ const getHeader =  (item) => {
     const description = getDescription(item.description);
 
     const body = `<div>${description}<a href=\"./Flutter/${guid}.html\">Read more...</a></div>\n`;
-    
+
     return header + author + body;
 }
 
 const getDescription = (body) => {
     const start = body.indexOf('<p>');
-    const desc = body.substring(start+3, 300);
+    const desc = body.substring(start + 3, 300);
     return desc;
 };
 
