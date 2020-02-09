@@ -1,5 +1,6 @@
 const data = require('./medium.com-feed-flutter');
 const fs = require('fs').promises;
+const cheerio = require('cheerio');
 
 async function download() {
 
@@ -61,20 +62,24 @@ const getHeader = (item) => {
 
     const guid = item.guid.split('/').pop();
 
-    const header = `<div class=\"mui--text-headline\">${item.title}</div>\n`;
+    const header = `<div class=\"mui--text-headline\">${item.title}</div>`;
 
-    const author = `<div class=\"mui--text-black-54\">By ${item.author}, ${item.pubDate}</div>\n`;
+    const author = `<div class=\"mui--text-black-54\">By ${item.author}, ${item.pubDate}</div>`;
 
     const description = getDescription(item.description);
 
-    const body = `<div>${description}<a href=\"./Flutter/${guid}.html\">Read more...</a></div>\n`;
+    const body = `<div>${description}<a href=\"./Flutter/${guid}.html\"> Read more...</a></div>`;
 
-    return header + author + body;
+    return `${header}\n<br>\n${author}\n<br>\n${body}\n<br>\n`;
 }
 
 const getDescription = (body) => {
-    const start = body.indexOf('<p>');
-    const desc = body.substring(start + 3, 100);
+    // const start = body.indexOf('<p>');
+    // const desc = body.substring(start + 3, 400);
+
+    $ = cheerio.load(body);
+    const desc = $('p').text().substring(0, 400);
+
     return desc;
 };
 
