@@ -5,7 +5,7 @@ const app = express();
 
 const PORT = process.env.PORT || 3000;
 
-setInterval(tools.download, 10000);
+setInterval(tools.download, 60000);
 
 app.use(express.static(__dirname + '/public'));
 
