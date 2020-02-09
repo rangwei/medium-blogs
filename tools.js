@@ -74,7 +74,7 @@ const getHeader = (item) => {
 
 const getDescription = (body) => {
     const start = body.indexOf('<p>');
-    const desc = body.substring(start + 3, 300);
+    const desc = body.substring(start + 3, 100);
     return desc;
 };
 
