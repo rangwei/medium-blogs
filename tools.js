@@ -20,6 +20,7 @@ const generateIndex = async () => {
 
         const contenct = getIndexContent();
         indexString = indexString.replace('index-place', contenct);
+        indexString = indexString.replace('date-place', Date());
 
         await fs.writeFile('./public/index.html', indexString);
         console.log('index.html completed.');
