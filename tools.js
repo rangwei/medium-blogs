@@ -1,10 +1,17 @@
-const data = require('./medium.com-feed-flutter');
+// const data = require('./medium.com-feed-flutter');
 const fs = require('fs').promises;
+const axios = require('axios');
 const cheerio = require('cheerio');
+
+
+const url = 'https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fmedium.com%2Ffeed%2Fflutter';
 
 async function download() {
 
-    generateIndex();
+    const resp = await axios.get(url);
+    const data = resp.data;
+
+    generateIndex(data);
 
     for (const item of data.items) {
         downloadBlogs(item);
@@ -12,13 +19,13 @@ async function download() {
 
 }
 
-const generateIndex = async () => {
+const generateIndex = async (data) => {
 
     try {
         const index = await fs.readFile('./Templates/index_template.html');
         let indexString = index.toString();
 
-        const contenct = getIndexContent();
+        const contenct = getIndexContent(data);
         indexString = indexString.replace('index-place', contenct);
         indexString = indexString.replace('date-place', Date());
 
@@ -50,7 +57,7 @@ const downloadBlogs = async (item) => {
 
 }
 
-const getIndexContent = () => {
+const getIndexContent = (data) => {
     let content = "";
 
     for (const item of data.items) {
