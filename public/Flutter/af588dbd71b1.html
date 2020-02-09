@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- load MUI -->
+    <link href="http://cdn.muicss.com/mui-0.10.1/css/mui.min.css" rel="stylesheet" type="text/css" />
+    <script src="http://cdn.muicss.com/mui-0.10.1/js/mui.min.js"></script>
+  </head>
+  <body>
+    <!-- example content -->
+    <div class="mui-container">
+      <div class="mui-panel">
+          <h1>We hear you — learnings from Q3 2019 Flutter user survey</h1>
+          
+<h3>We hear you — learnings from Q3 2019 Flutter user survey</h3>
+<p><em>On performance, add-to-app, plugins, and more</em></p>
+<figure><img alt="" src="https://cdn-images-1.medium.com/max/1024/1*kC6Z0A82B9Yk4mV88fo9CQ.png"></figure><p>Flutter’s User Experience team runs a survey every quarter to understand what we can do to help you be successful with Flutter. Over 7,500 users participated in the Q3 survey, and we’re here to share what we learned, <a href="https://medium.com/flutter/search?q=survey">as always</a>.</p>
+<p>Overall, 92% of the users were either <em>somewhat satisfied </em>or <em>very satisfied</em> with Flutter. This is the first question we ask in every survey, because it is important for us to build a product that you love. We are excited to see the same level of satisfaction as <a href="https://medium.com/flutter/what-do-flutter-package-users-need-6ecba57ed1d6">last quarter</a>.</p>
+<h3><strong>Performance</strong></h3>
+<p>Flutter continues to polish its foundation, and that includes improving the experience around Flutter’s performance. To better understand how we’re doing on this topic, we covered the performance of Flutter as one of the main topics in this survey.</p>
+<p>While 78% of the users had experience with release or profile mode (performance should only be assessed in release or profile mode), 85% of them were positively satisfied (either <em>somewhat satisfied </em>or <em>very satisfied</em>) with Flutter’s performance. In addition, we asked about sub-categories of performance: rendering performance, memory performance, power usage performance, and binary size. We learned that 10% to 20% of users don’t know how to assess these aspects of performance, and the least satisfying aspect was the binary size (54% positively satisfied). For those who need more information about how to assess and optimize different aspects of performance, we will soon publish how-to guides, in addition to <a href="https://flutter.dev/docs/perf">the existing documentation on performance</a>. The survey was an opportunity for us to understand that some performance metrics, such as power usage or memory performance, are harder to assess than others.</p>
+<figure><img alt="" src="https://cdn-images-1.medium.com/max/1024/0*UMfWbaBispXV0tMD"><figcaption><em>10% to 20% of users don’t know how to assess these performances</em></figcaption></figure><p>We also learned that only about half of the users (47%) are using <a href="https://flutter.dev/docs/development/tools/devtools/overview">Dart DevTools</a> to measure the performance of their Flutter app, which is a suite of performance tools for Dart and Flutter. Half of those who haven’t used Dart DevTools said that they didn’t know they exist (48%) and a fifth of them didn’t know how to use them (21%). We will put more effort on increasing the awareness of the DevTools. We will also more tightly integrate DevTools with the IDEs, making it easier to launch specific DevTools functionality, potentially without requiring opening a separate web browser.</p>
+<figure><img alt="" src="https://cdn-images-1.medium.com/max/1024/0*jKeTRjxJ0q0gFu2H"><figcaption><em>Performance profiling tool preference</em></figcaption></figure><h3><strong>Add-to-app</strong></h3>
+<p>Add-to-app is the incremental adoption of Flutter by adding a Flutter-rendered screen into an existing Android or iOS app, rather than creating a from-scratch Flutter-only project. This is a great way to adopt Flutter when there are constraints that prevent you from writing an app from scratch, and the team is investing into supporting such a journey.</p>
+<p>From the survey, we learned that 56% of respondents are interested in add-to-app, and 36% of them have already attempted implementing add-to-app in their existing apps, while 40% were not aware that it’s currently possible with Flutter. Experimental add-to-app instructions are described in the <a href="https://github.com/flutter/flutter/wiki/Add-Flutter-to-existing-apps">wiki page</a>. Although many users wanted to try add-to-app rather than building a full Flutter app, 64% of the interested users said that they would attempt to transition to a full Flutter app in a year, instead of remaining in a hybrid app.</p>
+<p>The survey also helped the team identify future plans, such as which UI pattern to prioritize (i.e., full screen vs. partial screen), which tooling to improve first, and so on. It was also news to us that the lack of coverage in middleware (such as platform ⇄ Flutter interoperability) was the biggest challenge to those who tried add-to-app already, even more than the lack of capability/APIs or documentation. The team is working towards a better add-to-app experience. You can watch their progress in the <a href="https://github.com/flutter/flutter/projects/51">Add to App 2019 GitHub project</a>.</p>
+<h3><strong>Plugins</strong></h3>
+<p>Ecosystem is another crucial part of Flutter; this enables developers to extend the capabilities of Flutter with packages and plugins when the core framework doesn’t support a particular feature. In the Q2 survey, we covered a number of <a href="https://medium.com/flutter/what-do-flutter-package-users-need-6ecba57ed1d6">ecosystem-related questions</a> to understand your pain points. In Q3, we added two open-ended questions to better understand which plugins (or lack of plugins) are impeding the development and release of your apps.</p>
+<p>16% of all respondents answered these questions, and we identified over 70 common themes. Some of the frequently-mentioned themes are listed below. The main takeaway for us is that the listed plugins already exist on pub.dev. This tells us that raising the quality of existing plugins should be one of the most important goals in the coming quarters.</p>
+<ol>
+<li>Geo (e.g., Google Maps)</li>
+<li>Media (e.g., audio/video player, audio/video recording)</li>
+<li>Webview</li>
+<li>Ads (e.g., Admob, native ads)</li>
+<li>Payment</li>
+<li>Data management</li>
+<li>Image support (e.g. Lottie, SVG)</li>
+<li>Camera</li>
+<li>Notifications</li>
+<li>Background services</li>
+</ol>
+<p>We will focus on improving your experience around Flutter’s ecosystem and also make it easier for you to find quality plugins. As a starting point, Dart has recently released a “<a href="https://medium.com/dartlang/verified-publishers-98f05466558a">verified publishers</a>” feature for <a href="http://pub.dev/">pub.dev</a> (on Dart’s 8th birthday!) to make it easy for users to identify trustworthy publishers. This was one of the planned improvements mentioned in the recap of the <a href="https://medium.com/flutter/what-do-flutter-package-users-need-6ecba57ed1d6">previous survey</a>. Please keep your eye out for further improvements.</p>
+<figure><img alt="" src="https://cdn-images-1.medium.com/max/1024/0*rHPbdMZoe86uwe1H"><figcaption><em>First page of dart.dev features some verified Flutter packages</em></figcaption></figure><h3><strong>Frustrating experiences</strong></h3>
+<p>We also asked another open-ended question about recurring annoyances. Although <a href="https://github.com/flutter/flutter/issues">GitHub issues</a> are open to anyone who wants to file, comment, or upvote, on this survey we wanted to capture frictions that users might not have reported on Github.</p>
+<p>We collected over 1,600 comments from this one question, and several team members dedicated many hours to reading and sorting them into categories. We were able to capture some minor but frequent failures that may potentially lead to annoyance and frustration, such as issues related to hot reload and debugging, issues with upgrades and migration, and so on. The sub-teams of Flutter were notified of issues relevant to their work, and it led to many productive discussions. For example, we are working on <a href="https://github.com/flutter/flutter/issues/42549">better reporting</a> to understand hot reload issues. If you have recurring annoyances, do not hesitate to file an issue. We are tracking those with the “a: annoyance” <a href="https://github.com/flutter/flutter/labels/a%3A%20annoyance">label</a>.</p>
+<figure><img alt="" src="https://cdn-images-1.medium.com/max/1024/0*c_10W3HCaw0k6u_h"><figcaption><em>Track the progress on Github</em></figcaption></figure><p>Thank you again for participating in the survey! Please continue to provide valuable feedback to the Flutter team and help us plan for the coming quarters. Flutter’s UX research team also performs a variety of user experience studies so that we can learn how to make your experience with Flutter more pleasant. If you are interested in participating, please <a href="http://flutter.dev/research-signup">sign up</a> for future studies.</p>
+<img src="https://medium.com/_/stat?event=post.clientViewed&amp;referrerSource=full_rss&amp;postId=af588dbd71b1" width="1" height="1"><hr>
+<p><a href="https://medium.com/flutter/we-hear-you-learnings-from-q3-2019-flutter-user-survey-af588dbd71b1">We hear you — learnings from Q3 2019 Flutter user survey</a> was originally published in <a href="https://medium.com/flutter">Flutter</a> on Medium, where people are continuing the conversation by highlighting and responding to this story.</p>
+
+      </div>
+    </div>
+  </body>
+</html>

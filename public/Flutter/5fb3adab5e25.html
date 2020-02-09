@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- load MUI -->
+    <link href="http://cdn.muicss.com/mui-0.10.1/css/mui.min.css" rel="stylesheet" type="text/css" />
+    <script src="http://cdn.muicss.com/mui-0.10.1/js/mui.min.js"></script>
+  </head>
+  <body>
+    <!-- example content -->
+    <div class="mui-container">
+      <div class="mui-panel">
+          <h1>Issues, Bugs, and Backlogs</h1>
+          
+<h4>Managing feedback in a large open source project like Flutter</h4>
+<p>The growth of Flutter as a community-driven open source project is an ongoing source of delight to us here at Google. Whether measured in <a href="https://twitter.com/timsneath/status/1189594253690691584">popularity on GitHub</a>, number of <a href="https://www.reddit.com/r/FlutterDev/comments/dsnzbq/githubs_2019_octoverse_report_is_out_flutter_is/">projects created</a>, or <a href="https://adtmag.com/articles/2019/03/29/linkedin-skills.aspx">skills growth</a>, 2019 has been a defining year for the project, and we’re ever thankful to you all for your support and contributions to make Flutter the project it is. We build Flutter with you and for you, and we hope that comes across in everything we do.</p>
+<p>As we’ve grown, the number of issues we need to track grows, too! We use issues on GitHub in a variety of ways: not just to report bugs, but any unit of work pertaining to the project. Anyone can submit an issue, and these issues fall into a number of categories:</p>
+<ul>
+<li>Feature requests: things a user or a contributor wish that Flutter could do, or do better.</li>
+<li>Support issues: questions from users as to how Flutter works or how to do things. While these are better asked on Stack Overflow, many point to ways that we could improve our documentation, too.</li>
+<li>Bona fide defects: things that don’t work as they should. This includes serious issues like crashes and performance regressions, but also those pesky fit-and-finish bugs that are common in any large software system.</li>
+<li>Untriaged items that haven’t been examined and labeled.</li>
+</ul>
+<p>Thus, our issues aren’t just a collection of defects; they’re our backlog. Anything we think of that we may want to work on should be represented as an issue, appropriately labeled, so that as we plan our goals and milestones we have a place from which to start.</p>
+<p>Some projects use the number of open bugs as a proxy for gauging release quality, and classify bugs as either defects or issues. <a href="https://github.com/flutter/flutter/wiki/Issue-hygiene#issue-philosophy">Flutter doesn’t do this; we choose to track bugs and issues the same way, in GitHub, keeping everything in the open</a>. As a result, there will always be far more things that we <em>could</em> be working on than we actually <em>are</em> working on. This is true for many healthy open-source projects; one need only look at others that have been around for a while such as <a href="https://github.com/tensorflow/tensorflow/issues">Tensorflow</a>, <a href="https://bugs.chromium.org/p/chromium/issues/list">Chrome</a>, <a href="https://github.com/dart-lang/sdk/issues">Dart</a>, <a href="https://github.com/golang/go/issues">Go</a>, or <a href="https://github.com/Microsoft/vscode/issues">VSCode</a>.</p>
+<p>Nonetheless, we want to be sure that our incoming issues are well-labeled and do the necessary gardening work so that our issue database is an accurate reflection of our product status. To this end, we’ve engaged with the community: there are a number of volunteers helping us with our front-line triage, and we’re <a href="https://blog.codemagic.io/flutter-and-codemagic-join-forces-on-github/">pleased to announce that we’ve partnered with Nevercode</a>, the providers of <a href="https://codemagic.io/">Codemagic</a>, a leading CI/CD system for Flutter, to help us with our front-line triage as well.</p>
+<h3>The Lifecycle of an Issue</h3>
+<p>We welcome new issue submissions! Our issue triage process is described in <a href="https://github.com/flutter/flutter/wiki/Triage">Guidelines for triage</a>. Here’s how it works in practice:</p>
+<p>An issue starts with you: a user of Flutter, or an open-source contributor. Once you file it (hopefully with a reproducible case if it’s a bug, or a clear outline of what you’re proposing and why, if it’s a feature request), it goes to <em>front-line triage</em>.</p>
+<p>In front-line triage, a community participant — perhaps a volunteer, perhaps someone at Nevercode, or an engineer working on Flutter — examines the issue you’ve filed, and asks several questions:</p>
+<ul>
+<li>Is it clearly defined?</li>
+<li>If a bug, does it have a reproducible case and enough to go on?</li>
+<li>If a feature enhancement, do we understand enough about what you’re asking for so that we can gauge its contribution to the platform?</li>
+<li>Does it duplicate a previously filed issue?</li>
+</ul>
+<p>As we do this, our front-line triage applies as many labels to the issue as we can. We use these labels in lots of ways, such as to establish relative priority, determine how to route an issue to a particular team, and whether to include the issue in an upcoming milestone. We use both GitHub queries and some custom tools to mine the issues for signals as to what the community is looking for and why.</p>
+<p>From there, it goes to <em>secondary triage</em>, where an assigned team looks at the issue, and asks questions such as how the issue fits with the current work that they’re doing, and when they can schedule the work for completion. Again, more labels may be added or changed, as the labels provide us with the best possible snapshots as to the work we want to do and who can do the work.</p>
+<p>Eventually, an engineer offers to work on the issue. Unlike many software projects, we generally don’t assign issues to contributors: whether a contributor works for Google or not, contributors offer to tackle issues, rather than get assigned issues from the backlog. By letting developers offer, we distribute load-balancing down to individual contributors; each contributor self-assigns only the issues they’re actively working on, and gives milestones to those issues so that we know when they’ll land on the master branch. Leads may ask particular people to work on issues, of course, but most of the time it’s just that: a request for help, not an ultimatum or an assignment.</p>
+<p>Once an issue has been completed to our satisfaction, it is closed. Often this includes a link to the pull request addressing the issue, but there are other reasons we close issues, including:</p>
+<ul>
+<li>Is this a request for support? We direct the reporter to a support channel such as the <a href="mailto:flutter-dev@googlegroups.com">flutter-dev@googlegroups.com</a> mailing list, the <a href="https://reddit.com/r/flutterdev">r/FlutterDev</a> Reddit, our Discord communities (<a href="https://discordapp.com/invite/N7Yshp4">user chat</a>, <a href="https://github.com/flutter/flutter/wiki/Chat">community chat</a> used primarily by contributors), or <a href="https://stackoverflow.com/tags/flutter">Stack Overflow</a>.</li>
+<li>Is this a duplicate issue? Before closing, we link to the original issue, which also updates the original issue.</li>
+<li>Does the issue have enough information to reproduce, and have we been able to reproduce it? If not, odds are that we can’t do anything and will close the issue.</li>
+</ul>
+<h3>Our Progress Thus Far</h3>
+<p>As you can imagine, as our popularity has grown, so has the number of opened and closed issues for <a href="http://github.com/flutter/flutter">github.com/flutter/flutter</a> (this contains all issues except those for the web site, which are logged at <a href="http://github.com/flutter/website">github.com/flutter/website</a>):</p>
+<figure><img alt="" src="https://cdn-images-1.medium.com/max/616/1*D_MCtnl2h_spFgoORikDcA.png"><figcaption>Closed vs. open bugs for month-ends since Jan-2018</figcaption></figure><p>Equally exciting is the number of issues <em>not</em> bearing a label corresponding to one of our secondary triage teams, such as <a href="https://github.com/flutter/flutter/labels/framework">framework</a>, <a href="https://github.com/flutter/flutter/labels/engine">engine</a>, or <a href="https://github.com/flutter/flutter/labels/plugin">plugin</a>:</p>
+<figure><img alt="" src="https://cdn-images-1.medium.com/max/615/1*9ZXPKWTBT01b_6zsFtundg.png"><figcaption>Issues not labeled for secondary triage, Mar-2019-present</figcaption></figure><p>You can clearly see where we started to engage Nevercode in our triage process, first in early September, with great progress by mid-September as they got up to speed.</p>
+<p>This emphasis on triage reflects our goal: not to have zero <em>open</em> issues, but to have zero <em>unlabeled</em> issues to provide adequate signals from our community, so that we can best prioritize our work. As Flutter continues to grow in popularity, we expect to see continued growth in the number of open issues that require triage, many of which will be requests for new features from the community. We’ll continue to use labels to help us determine which are bugs that require immediate attention, which are bugs we can defer to our next beta or stable release, and which are new feature requests.</p>
+<h3>How You Can Help</h3>
+<p>You can help keep our issue database clean and tidy with actionable issues. When filing an issue, please consider the following :</p>
+<ul>
+<li>Don’t use GitHub for support. As part of our issue triage, we’re now closing requests for support that come up in GitHub, redirecting folks to better channels. In those channels you’ll likely find someone able to answer your question, and the questions and answers are easier for other users to find as well.</li>
+<li>Help with reproducible cases: if it’s your own issue, make sure you have one. Even if it’s not your issue, we’ll gladly take reproducible cases from you, too! Writing reproducible cases for bugs is a great way to start learning how to use Flutter with real-world examples.</li>
+<li>Update and upvote issues that are important to you.</li>
+<li>Contribute test cases to the Flutter repository. This is another way to get your feet wet using Flutter and join the community. It also helps us prevent regressions: while all new code is accompanied by test cases, we strive to increase our test coverage as a matter of good practice. If you’re interested in contributing in this way, you can take a look at issues with the <a href="https://github.com/flutter/flutter/labels/a%3A%20tests">a: tests</a> label.</li>
+<li>Consider helping us triage issues that others have filed.</li>
+</ul>
+<p>We’re deeply appreciative of the support and trust you’ve given us in investing your time and application ideas with Flutter. We welcome community involvement, whether it be filing a bug or feature you’d like to see addressed, or creating a pull request to make Flutter the platform you want to work with. Thank you!</p>
+<img src="https://medium.com/_/stat?event=post.clientViewed&amp;referrerSource=full_rss&amp;postId=5fb3adab5e25" width="1" height="1"><hr>
+<p><a href="https://medium.com/flutter/https-medium-com-flutter-issues-bugs-and-backlogs-5fb3adab5e25">Issues, Bugs, and Backlogs</a> was originally published in <a href="https://medium.com/flutter">Flutter</a> on Medium, where people are continuing the conversation by highlighting and responding to this story.</p>
+
+      </div>
+    </div>
+  </body>
+</html>

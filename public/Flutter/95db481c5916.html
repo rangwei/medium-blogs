@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- load MUI -->
+    <link href="http://cdn.muicss.com/mui-0.10.1/css/mui.min.css" rel="stylesheet" type="text/css" />
+    <script src="http://cdn.muicss.com/mui-0.10.1/js/mui.min.js"></script>
+  </head>
+  <body>
+    <!-- example content -->
+    <div class="mui-container">
+      <div class="mui-panel">
+          <h1>Flutter animation basics with implicit animations</h1>
+          
+<p>In this series of posts, we’re going to introduce you to animations in Flutter, and show you how to build both simple and complex animations for your Flutter app.</p>
+<p><em>This post is also available as a </em><a href="https://www.youtube.com/watch?v=IVTjpW3W33s"><em>video</em></a><em>, if you prefer.</em></p>
+<p>In this first post, we’re going to focus on the most straightforward way to add animations to your app. You don’t have to be an expert on animations or animation terminology to add animations to your app. Along the way, we’ll introduce some widgets and terminology that will help you get started with animations right away and give you some background for the rest of the posts in the series.</p>
+<h3>Implicitly animated widgets</h3>
+<p>Flutter includes a series of widgets that are animated versions of existing widgets that you probably already used in your app, such as the <a href="https://api.flutter.dev/flutter/widgets/AnimatedContainer-class.html">AnimatedContainer</a> version of the <a href="https://api.flutter.dev/flutter/widgets/Container-class.html">Container</a> widget and the <a href="https://api.flutter.dev/flutter/widgets/AnimatedPositioned-class.html">AnimatedPositioned</a> version of the <a href="https://api.flutter.dev/flutter/widgets/Positioned-class.html">Positioned</a> widget.</p>
+<p>These widgets automatically animate changes to their properties. When you rebuild the widget with new property values, such as with a <a href="https://api.flutter.dev/flutter/widgets/StatefulWidget-class.html">StatefulWidget</a>’s setState, the widget handles driving the animation from the previous value to the new value.</p>
+<figure><img alt="" src="https://cdn-images-1.medium.com/max/600/0*8lW_z0nxESDIBO9R"><figcaption>A screen recording where the code for an app is modified and the application animates the size of a star widget.</figcaption></figure><p>These widgets are called <a href="https://api.flutter.dev/flutter/widgets/ImplicitlyAnimatedWidget-class.html">Implicitly Animated Widgets</a>. They are typically the first thing you reach for when you need to add animations to your app. They provide a way to add animations without adding additional complexity.</p>
+<h3>The AnimatedContainer widget</h3>
+<p>Let’s look a little closer at how you can use one of these implicitly animated widgets to add some animation to your app.</p>
+<p>In this app, there is a container and a button. When the button is pressed, setState is called, and the container is rebuilt with a new value for width. Notice that the container changes its width immediately, without any animation.</p>
+<figure><img alt="" src="https://cdn-images-1.medium.com/max/600/0*TRpN2WHDqNJtk7vI"><figcaption>The star gets bigger instantly, with no animation between its states.</figcaption></figure><pre><a href="http://twitter.com/override">@override</a><br>Widget build(BuildContext context) {<br>  return Column(<br>    mainAxisAlignment: MainAxisAlignment.center,<br>    children: &lt;Widget&gt;[<br>      Container(<br>        width: _bigger ? 100 : 500,<br>        child: Image.asset('assets/star.png'),<br>      ),<br>      RaisedButton(<br>        onPressed: () =&gt; setState(() {<br>          _bigger = !_bigger;<br>        }),<br>        child: Icon(Icons.star),<br>      ),<br>    ],<br>  );<br>}</pre>
+<p>We can add some animation to this app by switching the Container widget for an AnimatedContainer widget and specifying an animation duration.</p>
+<pre>AnimatedContainer(<br>  width: _bigger ? 100 : 500,<br>  child: Image.asset('assets/star.png'),<br>  duration: Duration(seconds: 1),<br>),</pre>
+<p>Now, when the button is pressed, the container gradually animates from the previous width value to the new value.</p>
+<figure><img alt="" src="https://cdn-images-1.medium.com/max/600/0*VdFcZ_eCsnJnJXb-"><figcaption>The star now animates between its states</figcaption></figure><p>The process of animating through the values between the old and new value is called <a href="https://en.wikipedia.org/wiki/Interpolation">interpolation</a>. The AnimatedContainer handles interpolating its properties between the old and the new values whenever they change.</p>
+<p>This applies to all of the AnimatedContainer’s properties, including, for example, the <a href="https://api.flutter.dev/flutter/widgets/AnimatedContainer/decoration.html">decoration</a>. We can modify the gradient within a decoration and the AnimatedContainer handles interpolating between the old and new gradient:</p>
+<pre>AnimatedContainer(<br>  decoration: BoxDecoration(<br>    gradient: RadialGradient(<br>      colors: [Colors.purple, Colors.transparent],<br>      stops: [ _bigger ? 0.2 : 0.5, 1.0])<br>  ),<br>),</pre>
+<figure><img alt="" src="https://cdn-images-1.medium.com/max/600/0*k-sSbKs-rCvbxB1a"><figcaption>The star now has an animated gradient</figcaption></figure><h3>Controlling the animation with duration and curves</h3>
+<p>Implicitly animated widgets like AnimatedContainer have two properties that you can use to control the animation’s behavior. You can control how long it takes to interpolate to the new value by setting the <a href="https://api.flutter.dev/flutter/widgets/ImplicitlyAnimatedWidget/duration.html">duration</a> property.</p>
+<pre>AnimatedContainer(<br>  width: _bigger ? 100 : 500,<br>  child: Image.asset('assets/star.png'),<br>  duration: Duration(seconds: 5),<br>),</pre>
+<figure><img alt="" src="https://cdn-images-1.medium.com/max/600/0*wGVszwaj9kdJlOsS"></figure><figure><img alt="" src="https://cdn-images-1.medium.com/max/600/0*1g6d0g2ruUw0ZNBb"><figcaption>Faster on the left, slower on the right</figcaption></figure><p>In this example, we made the animation take a much longer amount of time.</p>
+<p>You can also control the way the widget interpolates from the old to the new value by using a <a href="https://api.flutter.dev/flutter/animation/Curve-class.html">Curve</a>. Curves control the rate of change over time and can help your animations feel more realistic. In this example, we changed the curve from the default linear curve to a more exaggerated quintic curve:</p>
+<pre>AnimatedContainer(<br>  width: _bigger ? 100 : 500,<br>  child: Image.asset('assets/star.png'),<br>  duration: Duration(seconds: 1),<br>  curve: Curves.easeInOutQuint,<br>),</pre>
+<figure><img alt="" src="https://cdn-images-1.medium.com/max/600/0*UySYHB5By2kX9P_6"></figure><figure><img alt="" src="https://cdn-images-1.medium.com/max/600/0*_8Ynon8NQu4zB3B7"><figcaption>Linear on the left, quintic on the right</figcaption></figure><p>There are many different <a href="https://api.flutter.dev/flutter/animation/Curves-class.html">built-in Curves</a> available to give your animations a bit of character, and you can also define your own custom curves. Curves can even be discontinuous, like the <a href="https://api.flutter.dev/flutter/animation/SawTooth-class.html">SawTooth</a> curve.</p>
+<p>Here’s an example of a custom curve called SineCurve that uses the sine function to make a curve that bounces:</p>
+<pre>class SineCurve extends Curve {<br>  final double count;<br><br>  SineCurve({this.count = 1});<br><br><a href="http://twitter.com/override">@override</a><br>  double transformInternal(double t) {<br>    return sin(count * 2 * pi * t) * 0.5 + 0.5;<br>  }<br>}</pre>
+<p>Here, SineCurve makes the star bounce up and down:</p>
+<figure><img alt="" src="https://cdn-images-1.medium.com/max/600/0*eouqer3J3CQE-fO4"><figcaption>Now that is a happy star</figcaption></figure><h3>To recap</h3>
+<p>Flutter provides implicitly animated widgets that are animated versions of common widgets. You can control the way these widgets animate using durations and curves.</p>
+<p>AnimatedContainer is one notably powerful implicitly animated widget because it has many properties that affect its appearance, and all of them are automatically interpolated.</p>
+<p>All of the other implicitly animated widgets are also powerful, easy-to-use options for adding animations without adding a lot of complexity.</p>
+<p>Also, you don’t necessarily need to place these widgets into a StatefulWidget and use setState, you can use <a href="https://api.flutter.dev/flutter/widgets/StreamBuilder-class.html">StreamBuilder</a> and <a href="https://api.flutter.dev/flutter/widgets/FutureBuilder-class.html">FutureBuilder</a> to trigger animations like in <a href="https://gist.github.com/theacodes/98255cd57845731449582e12b132ed6d">this example</a>.</p>
+<h3>Digging deeper into animations</h3>
+<p>Implicitly animated widgets are your first choice for adding animations, however, this isn’t all that Flutter’s animation system has to offer. In the rest of this series, we explore the lower layers of the Flutter animation system, and show you how you can build advanced animations by using the animation system directly.</p>
+<p>For everything else, visit <a href="https://flutter.dev/">flutter.dev</a>.</p>
+<img src="https://medium.com/_/stat?event=post.clientViewed&amp;referrerSource=full_rss&amp;postId=95db481c5916" width="1" height="1"><hr>
+<p><a href="https://medium.com/flutter/flutter-animation-basics-with-implicit-animations-95db481c5916">Flutter animation basics with implicit animations</a> was originally published in <a href="https://medium.com/flutter">Flutter</a> on Medium, where people are continuing the conversation by highlighting and responding to this story.</p>
+
+      </div>
+    </div>
+  </body>
+</html>

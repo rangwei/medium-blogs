@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- load MUI -->
+    <link href="http://cdn.muicss.com/mui-0.10.1/css/mui.min.css" rel="stylesheet" type="text/css" />
+    <script src="http://cdn.muicss.com/mui-0.10.1/js/mui.min.js"></script>
+  </head>
+  <body>
+    <!-- example content -->
+    <div class="mui-container">
+      <div class="mui-panel">
+          <h1>How to Write a Flutter Web Plugin</h1>
+          
+<h3>Introduction</h3>
+<p>Do you want to add support for a Flutter plugin? This article will show you how web support was added to the <a href="https://pub.dev/packages/url_launcher">url_launcher</a> plugin. Before you read this article, you should already be familiar with plugin development and the concepts in <a href="https://flutter.dev/docs/development/packages-and-plugins/developing-packages#plugin">Developing plugin packages</a>.</p>
+<h3>Example: package:url_launcher</h3>
+<p>First, let’s create an example app that uses package:url_launcher, so you can verify that it works correctly.</p>
+<p><strong>Setup</strong></p>
+<p>In order to use web plugins, you need to be on the Flutter dev channel. Make sure that you’re on the dev channel by running:</p>
+<pre>$ flutter channel dev<br>$ flutter upgrade</pre>
+<p>Now, you need to enable web support so that Flutter can set up your app to run on the web:</p>
+<pre>$ flutter config --enable-web</pre>
+<p>Now, create a directory named url_launcher_example(let’s assume ~/url_launcher_example), and create a Flutter project in it:</p>
+<pre>$ mkdir “~/url_launcher_example”<br>$ cd “~/url_launcher_example”<br>$ flutter create .</pre>
+<p><strong>Use </strong><strong>package:url_launcher</strong></p>
+<p>Our example app will have just a button that launches google.com.</p>
+<p>First, update the pubspec so that you depend on package:url_launcher. In pubspec.yaml, under dependencies, add the line (highlighted in bold):</p>
+<pre>name: url_launcher_example<br> ...<br>dependencies:<br>  flutter:<br>    sdk: flutter<br><strong>url_launcher: 5.2.3</strong><br>  ...</pre>
+<p>Now, replace the entire contents of lib/main.dart with the following:</p>
+<a href="https://medium.com/media/288972317514c5b76509f5d340d79b94/href">https://medium.com/media/288972317514c5b76509f5d340d79b94/href</a><p>Verify that the app works by running it on your Android or iOS device, or simulator by running the app normally with flutter run. The app should look like this screenshot. Try clicking the <strong>Launch</strong>! button and verify that it opens Google.</p>
+<figure><img alt="" src="https://cdn-images-1.medium.com/max/1024/1*UTowUOvpkFW35rcuJ3Lf1w.png"><figcaption>URL Launcher Example app</figcaption></figure><p>Now, you can run the same app on the web with flutter run -d chrome. The app should open and render just like the mobile version, but clicking <strong>Launch</strong>! does nothing. Let’s start writing the web plugin for url_launcher.</p>
+<h3>
+<strong>Creating </strong><strong>package:url_launcher_web</strong>
+</h3>
+<p>Create a new directory called url_launcher_web (let’s assume ~/url_launcher_web):</p>
+<pre>$ mkdir “~/url_launcher_web”<br>$ cd “~/url_launcher_web”</pre>
+<p>Unfortunately, there is no template for web plugins currently (that is, you can’t use flutter create), so you’ll have to create the plugin manually. But, before you start coding, some discussion is in order about how this is actually going to be implemented.</p>
+<p><strong>Looking into </strong><strong>package:url_launcher</strong></p>
+<p>Let’s take a look at how package:url_launcher is implemented, so you know what to do for package:url_launcher_web. The main code can be found <a href="https://github.com/flutter/plugins/blob/f04b3c8565ca9d2dac1f7f1ee8a44f41f97fe542/packages/url_launcher/url_launcher/lib/url_launcher.dart">here</a>. These are the main bits you should care about:</p>
+<a href="https://medium.com/media/03c15edfdcd548e0fec0ba40c98db037/href">https://medium.com/media/03c15edfdcd548e0fec0ba40c98db037/href</a><p>Almost all Flutter plugins are written like this. They create a MethodChannel, and then the plugin works by sending a method call on the channel to the “platform-side” (that is, Android or iOS) of the plugin. So, the way this plugin works on Android is that there is some code, written in Java, that registers a MethodChannel on the Android side. The MethodChannel waits for method calls, which call the required Android code to launch a URL. In order to get this plugin working on the web, you need to do the same thing as in the Android and iOS implementations, create a MethodChannel that waits for method calls, and when the MethodChannel receives them, launches the given URL.</p>
+<p><strong>Implementing </strong><strong>package:url_launcher_web</strong></p>
+<p>Web implementations of Flutter plugins are written as Dart packages. Let’s begin with the pubspec.yaml. Assuming you’re in your url_launcher_web directory you created earlier, create a file named pubspec.yaml, and paste the following code in the file:</p>
+<a href="https://medium.com/media/1d767c3a24e4ed2827f642698c6e1ae1/href">https://medium.com/media/1d767c3a24e4ed2827f642698c6e1ae1/href</a><p>Some key things to note:</p>
+<ul>
+<li>The platforms: section contains a section for web: that declares the name of the class where you will implement the plugin, as well as the filename containing the class.</li>
+<li>The flutter_web_plugins dependency lets you register the web implementation of url_launcher.</li>
+</ul>
+<p>We declared that our implementation will be a class named UrlLauncherPlugin and be written in url_launcher_web.dart, so let’s write that class now. Make sure you create a lib/ directory first, then edit lib/url_launcher_web.dart, and paste the following code in the file:</p>
+<a href="https://medium.com/media/b2106dadcc15a869428141afde8cd330/href">https://medium.com/media/b2106dadcc15a869428141afde8cd330/href</a><p>There are several key points to note in our implementation, let’s go over them one by one.</p>
+<p><strong>Registering the plugin with </strong><strong>registerWith</strong></p>
+<p>Just as on Android or iOS, web plugins need to do some initialization before the app runs. This is done in the static registerWith method, which takes a Registrar (which comes from package:flutter_web_plugins).</p>
+<p>In this case, we are registering a MethodChannel to listen for incoming messages from the app. Note how we initialize the MethodChannel with registrar.messenger. All MethodChannels have a BinaryMessenger that they use to send and receive messages. By default, a MethodChannel uses the default BinaryMessenger defined in Flutter. The BinaryMessenger sends messages from the app to the platform side, but we are writing a plugin that is on the platform side and should receive messages from the app, so we need to initialize the MethodChannel with a different BinaryMessenger. Luckily, the Registrar that is passed to the plugin in registerWith has a messenger that does the right thing. By initializing our MethodChannel with it, we now have a MethodChannel that receives method calls from the app.</p>
+<p><strong>Handling method calls</strong></p>
+<p>The MethodChannel we created registered handleMethodCall as its method call handler. This means that any time the app-side MethodChannel (the one created in package:url_launcher) sends a method call to the platform-side MethodChannel (the one we created in registerWith) this method call handler is invoked.</p>
+<p>If the handler receives a method call to the ‘launch’ method, then it invokes _launch, which simply opens a new window with the given URL.</p>
+<h3>Using the web plugin in the example app</h3>
+<p>Our web plugin is looking good! Now, we need to use it from the example app we created earlier.</p>
+<p>Modify the pubspec in ~/url_launcher_example to add a dependency to ~/url_launcher_web. Your change should look something like this. (Make sure to use the correct path for where you actually put your directories):</p>
+<pre>dependencies:<br>  flutter:<br>    sdk: flutter<br>  url_launcher: 5.2.3<br><strong>  url_launcher_web:<br>    path: ../url_launcher_web</strong></pre>
+<p>Now, run the example app again with flutter run -d chrome. Try clicking the <strong>Launch</strong>! button. It should open google.com in a new tab.</p>
+<p>Congratulations! You successfully added web support to a Flutter plugin!</p>
+<img src="https://medium.com/_/stat?event=post.clientViewed&amp;referrerSource=full_rss&amp;postId=5e26c689ea1" width="1" height="1"><hr>
+<p><a href="https://medium.com/flutter/how-to-write-a-flutter-web-plugin-5e26c689ea1">How to Write a Flutter Web Plugin</a> was originally published in <a href="https://medium.com/flutter">Flutter</a> on Medium, where people are continuing the conversation by highlighting and responding to this story.</p>
+
+      </div>
+    </div>
+  </body>
+</html>
